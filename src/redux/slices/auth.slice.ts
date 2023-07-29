@@ -118,10 +118,8 @@ export const signOutUser = createAsyncThunk('auth/signout', async (payload: {
     }
 });
 
-export const selectLoading = (state: any) => state.auth.loading;
 export const selectStatus = (state: any) => state.auth.status;
 export const selectUser = (state: any) => state.auth.user;
-export const selectToken = (state: any) => state.auth.token;
 export const selectError = (state: any) => state.auth.error;
 
 export const {nullifyState} = authSlice.actions

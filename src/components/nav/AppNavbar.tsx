@@ -70,11 +70,11 @@ const AppNavBar: React.FC = () => {
         </span>
             </Navbar.Brand>
             {!user ? <div className="flex gap-2 md:order-2">
-                    <Link to='/user/login'><Button color="secondary" theme={customButtonTheme}>
+                    <Link to='/auth/login'><Button color="secondary" theme={customButtonTheme}>
                         Login
                     </Button>
                     </Link>
-                    <Link to="user/signup"><Button color="secondary" theme={customButtonTheme}>
+                    <Link to="/auth/signup"><Button color="secondary" theme={customButtonTheme}>
                         Sign up
                     </Button>
                     </Link>
@@ -93,9 +93,11 @@ const AppNavBar: React.FC = () => {
               {user.email}
             </span>
                         </Dropdown.Header>
-                        <Dropdown.Item>
-                            Preferences
-                        </Dropdown.Item>
+                        <Link to='/user/preferences'>
+                            <Dropdown.Item>
+                                Preferences
+                            </Dropdown.Item>
+                        </Link>
                         <Dropdown.Divider/>
                         <Dropdown.Item onClick={() => {
                             // @ts-ignore
@@ -118,7 +120,7 @@ const AppNavBar: React.FC = () => {
                     </Navbar.Link>
                 </Link>
                 {categories.map(category =>
-                    <Link to={category}>
+                    <Link to={`/${category}`}>
                         <Navbar.Link theme={customLinkTheme.link}
                                      key={category}
                                      active={selectedCategory === category}>

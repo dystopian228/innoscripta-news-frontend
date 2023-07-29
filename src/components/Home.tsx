@@ -1,4 +1,4 @@
-import NewsFeed from "../components/feed/NewsFeed";
+import NewsFeed from "./feed/NewsFeed";
 
 export default function Home() {
     return <div className="md:container md:mx-auto">

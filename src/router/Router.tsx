@@ -1,11 +1,13 @@
 import {createBrowserRouter} from "react-router-dom";
-import Home from "../pages/Home";
-import Signup from "../pages/auth/Signup";
+import Home from "../components/Home";
+import Signup from "../components/auth/Signup";
 import React from "react";
 import Wrapper from "./Wrapper";
 import NewsFeed from "../components/feed/NewsFeed";
-import Login from "../pages/auth/Login";
+import Login from "../components/auth/Login";
 import GuestWrapper from "./GuestRoute";
+import ProtectedWrapper from "./ProtectedRoute";
+import Preferences from "../components/preferences/Preferences";
 
 const router = createBrowserRouter([
     {
@@ -25,15 +27,26 @@ const router = createBrowserRouter([
     },
     {
         path: "/user",
+        element: <ProtectedWrapper withFooter/>,
+        children: [
+            {
+                path: "/user/preferences",
+                element: <Preferences/>,
+
+            }
+        ]
+    },
+    {
+        path: "/auth",
         element: <GuestWrapper/>,
         children: [
             {
-                path: "/user/signup",
+                path: "/auth/signup",
                 element: <Signup/>,
 
             },
             {
-                path: "/user/login",
+                path: "/auth/login",
                 element: <Login/>,
             }
         ]

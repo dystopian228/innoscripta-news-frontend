@@ -10,7 +10,7 @@ const ProtectedWrapper: React.FC<{ withFooter: boolean }> = ({withFooter}) => {
     const user = useSelector(selectUser);
 
     if (!user) {
-        return <Navigate to='/user/login'/>;
+        return <Navigate to='/auth/login'/>;
     }
     return (
         <div className="flex flex-col w-full h-full">
