@@ -4,14 +4,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     changeCategory,
     fetchNews,
-    selectAllArticles, selectCategory,
-    selectError,
+    selectAllArticles,
+    selectCategory,
     selectNextPage,
-    selectStatus,
-    emptyArticles
+    selectStatus
 } from "../../redux/slices/news.slice";
-import Article from "../../api/types/data.article.type";
-import {ApiResponseEnum} from "../../api/api.response.enum";
+import Article from "../../api/types/responses/data.article.type";
+import {ApiResponseEnum} from "../../api/types/responses/api.response.enum";
 import axios from "axios";
 import {Button} from "flowbite-react";
 import {BlipCircle} from "../common/Loader";
@@ -27,17 +26,12 @@ const NewsFeed: React.FC<NewsFeedProps> = () => {
     const nextPage: number | null = useSelector(selectNextPage);
     const requestStatus: ApiResponseEnum = useSelector(selectStatus);
     const selectedCategory = useSelector(selectCategory);
-    const error: string | null = useSelector(selectError);
 
     const cancelToken = axios.CancelToken;
     const tokenSource = cancelToken.source();
 
     useEffect(() => {
-        console.log(requestStatus);
-        console.log(category);
-        console.log(selectedCategory);
         if (selectedCategory != category) {
-            console.log('in');
             dispatch(changeCategory(category ?? null));
         } else if (requestStatus === ApiResponseEnum.IDLE) {
              // @ts-ignore
@@ -62,7 +56,7 @@ const NewsFeed: React.FC<NewsFeedProps> = () => {
         {
             articles.length > 0 && nextPage &&
             <Button
-                className="place-self-center from-purple-500 via-purple-600 to-purple-700"
+                className="place-self-center from-primary via-purple-600 to-purple-700"
                 gradientDuoTone="purpleToBlue"
                 isProcessing={requestStatus === ApiResponseEnum.LOADING}
                 onClick={() => {

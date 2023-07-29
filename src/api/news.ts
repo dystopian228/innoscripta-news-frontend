@@ -1,8 +1,8 @@
-import Article from "./types/data.article.type";
+import Article from "./types/responses/data.article.type";
 import axios, {METHODS} from "../util/axios";
 import {CancelTokenSource} from "axios";
 import {NEWS_CATEGORIES, NEWS_INDEX} from "./endpoints";
-import ApiResponse from "./types/api.response.type";
+import ApiResponse from "./types/responses/api.response.type";
 
 interface ArticlePagination {
     data: Article[];
@@ -17,7 +17,7 @@ interface ArticlePagination {
         last_page: number|null,
         total: number
     }
-};
+}
 export const getNewsFeed = async (page: number, category: string|null, cancelToken: CancelTokenSource): Promise<ApiResponse<ArticlePagination>> => {
     let params: Record<string, any> = {page: page};
     if (category !== null) {

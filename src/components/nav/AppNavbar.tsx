@@ -1,4 +1,4 @@
-import {Avatar, type CustomFlowbiteTheme, Dropdown, Navbar} from 'flowbite-react';
+import {Avatar, Button, type CustomFlowbiteTheme, Dropdown, Navbar} from 'flowbite-react';
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -7,11 +7,12 @@ import {
     selectCategories,
     selectStatus
 } from "../../redux/slices/root.slice";
-import {ApiResponseEnum} from "../../api/api.response.enum";
+import {ApiResponseEnum} from "../../api/types/responses/api.response.enum";
 import axios from "axios";
 import {capitalizeWord} from "../../util/common";
 import {selectCategory} from "../../redux/slices/news.slice";
 import {Link} from "react-router-dom";
+import {selectUser, signOutUser} from "../../redux/slices/auth.slice";
 
 const customLinkTheme: CustomFlowbiteTheme['navbar'] = {
     link: {
@@ -22,17 +23,25 @@ const customLinkTheme: CustomFlowbiteTheme['navbar'] = {
         }
     }
 };
+
+const customButtonTheme: CustomFlowbiteTheme['button'] = {
+    "color": {
+        "secondary": "focus:outline-none text-white bg-secondary-700 border border-transparent enabled:hover:bg-secondary-800 focus:ring-secondary-300 dark:bg-secondary-600 dark:enabled:hover:bg-secondary-700 dark:focus:ring-secondary-800 rounded-lg focus:ring-2",
+        "accent": "focus:outline-none text-white bg-accent-700 border border-transparent enabled:hover:bg-accent-800 focus:ring-accent-300 dark:bg-accent-600 dark:enabled:hover:bg-accent-700 dark:focus:ring-accent-800 rounded-lg focus:ring-2",
+    },
+}
 const AppNavBar: React.FC = () => {
 
     const dispatch = useDispatch();
     const categories: string[] = useSelector(selectCategories);
     const requestStatus: ApiResponseEnum = useSelector(selectStatus);
     const selectedCategory: string | null = useSelector(selectCategory);
+    const user = useSelector(selectUser);
+    const cancelToken = axios.CancelToken;
+    const tokenSource = cancelToken.source();
 
     useEffect(() => {
 
-        const cancelToken = axios.CancelToken;
-        const tokenSource = cancelToken.source();
 
         if (requestStatus === ApiResponseEnum.IDLE) {
 
@@ -60,30 +69,43 @@ const AppNavBar: React.FC = () => {
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
         </span>
             </Navbar.Brand>
-            <div className="flex md:order-2">
-                <Dropdown
-                    inline
-                    label={<Avatar alt="User settings"
-                                   img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded/>}
-                >
-                    <Dropdown.Header>
+            {!user ? <div className="flex gap-2 md:order-2">
+                    <Link to='/user/login'><Button color="secondary" theme={customButtonTheme}>
+                        Login
+                    </Button>
+                    </Link>
+                    <Link to="user/signup"><Button color="secondary" theme={customButtonTheme}>
+                        Sign up
+                    </Button>
+                    </Link>
+                </div> :
+                <div className="flex md:order-2">
+                    <Dropdown
+                        inline
+                        label={<Avatar alt="User settings"
+                                       img={`https://ui-avatars.com/api/?name=${user.name}`} rounded/>}
+                    >
+                        <Dropdown.Header>
             <span className="block text-sm">
-              Bonnie Green
+              {user.name}
             </span>
-                        <span className="block truncate text-sm font-medium">
-              name@flowbite.com
+                            <span className="block truncate text-sm font-medium">
+              {user.email}
             </span>
-                    </Dropdown.Header>
-                    <Dropdown.Item>
-                        Preferences
-                    </Dropdown.Item>
-                    <Dropdown.Divider/>
-                    <Dropdown.Item>
-                        Sign out
-                    </Dropdown.Item>
-                </Dropdown>
-                <Navbar.Toggle/>
-            </div>
+                        </Dropdown.Header>
+                        <Dropdown.Item>
+                            Preferences
+                        </Dropdown.Item>
+                        <Dropdown.Divider/>
+                        <Dropdown.Item onClick={() => {
+                            // @ts-ignore
+                            dispatch(signOutUser({tokenSource}));
+                        }}>
+                            Sign out
+                        </Dropdown.Item>
+                    </Dropdown>
+                    <Navbar.Toggle/>
+                </div>}
             <Navbar.Collapse>
                 <Link to='/'>
                     <Navbar.Link

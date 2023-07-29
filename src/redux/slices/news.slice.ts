@@ -1,10 +1,7 @@
-import {Action, createAsyncThunk, createSlice, PayloadAction, Slice, SliceCaseReducers} from '@reduxjs/toolkit'
-import {Dispatch} from "react";
-import {ApiResponseEnum} from "../../api/api.response.enum";
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {ApiResponseEnum} from "../../api/types/responses/api.response.enum";
 import {getNewsFeed} from "../../api/news";
-import {useSelector} from "react-redux";
-import Article from "../../api/types/data.article.type";
-import exp from "constants";
+import Article from "../../api/types/responses/data.article.type";
 import {CancelTokenSource} from "axios";
 
 export interface NewsState {
@@ -38,16 +35,14 @@ export const newsSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(fetchNews.pending, (state, action) => {
+            .addCase(fetchNews.pending, (state) => {
                 state.status = ApiResponseEnum.LOADING;
             })
             .addCase(fetchNews.fulfilled, (state, action) => {
                 state.status = ApiResponseEnum.SUCCESS
                 // Add any fetched posts to the array
-                console.log(state.nextPage);
                 state.articles = state.articles.concat(action.payload.data.data);
                 state.nextPage = action.payload.data.links.next && action.payload.data.meta.current_page ? action.payload.data.meta.current_page + 1 : null;
-                console.log(state.nextPage);
             })
             .addCase(fetchNews.rejected, (state, action) => {
                 state.status = ApiResponseEnum.FAILURE;

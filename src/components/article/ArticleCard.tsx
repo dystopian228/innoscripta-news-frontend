@@ -1,8 +1,7 @@
 import React from "react";
 import {Card, type CustomFlowbiteTheme} from "flowbite-react";
-import Article from "../../api/types/data.article.type";
-import Author from "../../api/types/data.author.type";
-import Source from "../../api/types/data.source.type";
+import Article from "../../api/types/responses/data.article.type";
+import Author from "../../api/types/responses/data.author.type";
 import {timeAgo} from "../../util/timeutil";
 
 const customTheme: CustomFlowbiteTheme['card'] = {

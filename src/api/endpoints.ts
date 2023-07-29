@@ -1,11 +1,14 @@
 //BASE
 export const BASE_ENDPOINT = `${process.env.REACT_APP_BASE_URL}`;
 
+//CSRF-COOKIE
+export const COOKIE_ENDPOINT = '/sanctum/csrf-cookie';
+
 //AUTH
-export const REGISTER_ENDPOINT = '/auth/register';
-export const LOGIN_ENDPOINT = '/auth/login';
-export const LOGOUT_ENDPOINT = '/auth/logout';
+export const REGISTER_ENDPOINT = '/api/auth/register';
+export const LOGIN_ENDPOINT = '/api/auth/authenticate';
+export const LOGOUT_ENDPOINT = '/api/auth/logout';
 
 //NEWS
-export const NEWS_INDEX = '/news';
-export const NEWS_CATEGORIES = 'news/categories';
+export const NEWS_INDEX = '/api/news';
+export const NEWS_CATEGORIES = '/api/news/categories';

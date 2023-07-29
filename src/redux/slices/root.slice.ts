@@ -1,12 +1,8 @@
-import {Action, createAsyncThunk, createSlice, PayloadAction, Slice, SliceCaseReducers} from '@reduxjs/toolkit'
-import {Dispatch} from "react";
-import {ApiResponseEnum} from "../../api/api.response.enum";
-import {getCategories, getNewsFeed} from "../../api/news";
-import {useSelector} from "react-redux";
-import Article from "../../api/types/data.article.type";
-import exp from "constants";
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {ApiResponseEnum} from "../../api/types/responses/api.response.enum";
+import {getCategories} from "../../api/news";
 import {CancelTokenSource} from "axios";
-import {newsSlice} from "./news.slice";
+import {signOutUser} from "./auth.slice";
 
 export interface RootState {
     globalLoading: boolean;
@@ -30,7 +26,7 @@ export const rootSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(fetchCategories.pending, (state, action) => {
+            .addCase(fetchCategories.pending, (state) => {
                 state.status = ApiResponseEnum.LOADING;
             })
             .addCase(fetchCategories.fulfilled, (state, action) => {
@@ -38,8 +34,17 @@ export const rootSlice = createSlice({
                 state.categories = action.payload.data;
                 state.globalLoading = false;
             })
-            .addCase(fetchCategories.rejected, (state, action) => {
+            .addCase(fetchCategories.rejected, (state) => {
                 state.status = ApiResponseEnum.FAILURE;
+                state.globalLoading = false;
+            })
+            .addCase(signOutUser.pending, (state) => {
+                state.globalLoading = true;
+            })
+            .addCase(signOutUser.fulfilled, (state) => {
+                state.globalLoading = false;
+            })
+            .addCase(signOutUser.rejected, (state) => {
                 state.globalLoading = false;
             })
     }
@@ -48,7 +53,6 @@ export const rootSlice = createSlice({
 export const fetchCategories = createAsyncThunk('root/categories', async (payload: {cancelToken: CancelTokenSource}) => {
     return getCategories(payload.cancelToken);
 });
-
 export const { changeGlobalLoading} = rootSlice.actions
 
 export const selectCategories = (state: any) => state.root.categories;
