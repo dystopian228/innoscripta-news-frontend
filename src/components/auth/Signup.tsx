@@ -59,7 +59,8 @@ const Signup: React.FC = () => {
                     placeholder: 'John Doe',
                     required: true,
                     type: 'text',
-                    componentType: 'textField'
+                    componentType: 'textField',
+                    optionList: []
                 },
                 {
                     id: 'email',
@@ -68,7 +69,8 @@ const Signup: React.FC = () => {
                     placeholder: 'johndoe@example.com',
                     required: true,
                     type: 'email',
-                    componentType: 'textField'
+                    componentType: 'textField',
+                    optionList: []
                 },
                 {
                     id: 'password',
@@ -77,7 +79,8 @@ const Signup: React.FC = () => {
                     placeholder: '',
                     required: true,
                     type: 'password',
-                    componentType: 'textField'
+                    componentType: 'textField',
+                    optionList: []
                 },
                 {
                     id: 'passwordConfirm',
@@ -86,7 +89,8 @@ const Signup: React.FC = () => {
                     placeholder: '',
                     required: true,
                     type: 'password',
-                    componentType: 'textField'
+                    componentType: 'textField',
+                    optionList: []
                 }
             ]
         }
@@ -95,7 +99,7 @@ const Signup: React.FC = () => {
 
     return <div className="w-full h-full relative flex items-center justify-center bg-cover"
                 style={{backgroundImage: "url('/auth_background.jpg')"}}>
-        <Card className="w-4/12">
+        <Card className="md:w-4/12 xs:w-9/12">
             <NewsyForm className="flex flex-col gap-4" initialValues={signUpInitialValues}
                        validationSchema={signUpValidationSchema} handleSubmit={handleSubmit} fieldGroups={fieldGroups}
                        tokenSource={tokenSource} error={error} loading={status === ApiResponseEnum.LOADING}/>

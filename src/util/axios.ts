@@ -17,7 +17,7 @@ const axiosInstance: AxiosInstance = axios.create({
     timeout: 30000,
     responseType: 'json',
     paramsSerializer: (params: any) => {
-        return qs.stringify(params, {allowDots: true});
+        return qs.stringify(params, {allowDots: false, arrayFormat: 'indices', encode: false});
     },
 });
 
@@ -37,10 +37,6 @@ const axiosDispatcher = <T>(
         },
         ...headers,
     };
-    //TODO: HANDLE ACCESS TOKEN
-    if ('accessToken') {
-        // requestHeaders['Authorization'] = `Bearer ${cookies.get('accessToken')}`;
-    }
 
     return axiosInstance({
         method,

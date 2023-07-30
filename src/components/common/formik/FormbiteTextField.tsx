@@ -34,7 +34,7 @@ const FormbiteTextField: React.FC<FormBiteFieldProps> = (props: FormBiteFieldPro
     return (
         <Field name={props.name}>
             {(fieldProps: any) => (
-                <>
+                <div className={props.className}>
                     <div className="mb-2 block">
                         <Label
                             htmlFor={props.name}
@@ -50,7 +50,7 @@ const FormbiteTextField: React.FC<FormBiteFieldProps> = (props: FormBiteFieldPro
                         value={fieldProps.field.value}
                         {...fieldProps}
                         {...props}
-                    /></>
+                    /></div>
             )
             }
         </Field>

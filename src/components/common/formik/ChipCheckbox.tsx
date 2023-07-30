@@ -10,6 +10,7 @@ interface ChipCheckboxProps {
         value: any,
         shouldValidate?: boolean | undefined,
     ) => void;
+    className: string|null;
 }
 
 const ChipCheckbox: React.FC<ChipCheckboxProps> = (props) => {
@@ -19,7 +20,7 @@ const ChipCheckbox: React.FC<ChipCheckboxProps> = (props) => {
             {(fieldProps: any) => {
                 return (<div
                     className={`flex items-center justify-center h-8 rounded px-3 font-medium text-sm cursor-pointer ease-in-out duration-300
-                  ${fieldProps.field.value ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'}`}
+                  ${fieldProps.field.value ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700'} ${props.className}`}
                     onClick={(event: any) => {
                         props.setFieldValue(fieldProps.field.name, !fieldProps.field.value);
                     }}

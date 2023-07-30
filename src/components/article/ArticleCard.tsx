@@ -31,7 +31,9 @@ const ArticleCard: React.FC<ArticleCardProps> = ({article}) => {
                  src={article.imageUrl ?? '/logo.svg'} alt={article.title}/>)}
         className="p-4 gap-6 justify-start grow"
         theme={customTheme}
-        href={`/news/${article.id}`}
+        href={article.articleUrl}
+        //@ts-ignore
+        target="_blank"
     >
         <div className="grow">
             <span className="text-gray-500 text-sm leading-tight">{timeAgo(article.publishDate)}</span>

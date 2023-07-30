@@ -20,8 +20,12 @@ const router = createBrowserRouter([
 
             },
             {
+                path: "/search",
+                element: <div className="md:container md:mx-auto relative flex flex-col grow"><NewsFeed searchable={true}/></div>,
+            },
+            {
                 path: "/:category",
-                element: <div className="md:container  md:mx-auto"><NewsFeed/></div>,
+                element: <div className="md:container md:mx-auto relative flex flex-col grow"><NewsFeed searchable={false}/></div>,
             }
         ]
     },
@@ -31,7 +35,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/user/preferences",
-                element: <Preferences/>,
+                element: <div className="md:container md:mx-auto relative flex flex-col grow"><Preferences/></div>,
 
             }
         ]

@@ -13,7 +13,7 @@ export interface RootState {
 export const initialState: RootState = {
     globalLoading: false,
     status: ApiResponseEnum.IDLE,
-    categories: []
+    categories: [],
 }
 
 export const rootSlice = createSlice({

@@ -22,7 +22,7 @@ const Preferences: React.FC = () => {
         dispatch(getPreferences({cancelToken: tokenSource}));
 
 
-    }, [dispatch])
+    }, [])
 
     const handleSubmit = (
         values: {
@@ -56,7 +56,8 @@ const Preferences: React.FC = () => {
                 placeholder: '',
                 required: false,
                 type: '',
-                componentType: 'checkbox'
+                componentType: 'checkbox',
+                optionList: []
             }))
         },
         {
@@ -69,7 +70,8 @@ const Preferences: React.FC = () => {
                 placeholder: '',
                 required: false,
                 type: '',
-                componentType: 'checkbox'
+                componentType: 'checkbox',
+                optionList: []
             }))
         }
     ];

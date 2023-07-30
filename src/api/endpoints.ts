@@ -12,6 +12,7 @@ export const LOGOUT_ENDPOINT = '/api/auth/logout';
 //NEWS
 export const NEWS_INDEX = '/api/news';
 export const NEWS_CATEGORIES = '/api/news/categories';
+export const NEWS_SOURCES = '/api/news/sources';
 
 //PREFERENCES
 export const PREFERENCES_INDEX = '/api/user/preferences';

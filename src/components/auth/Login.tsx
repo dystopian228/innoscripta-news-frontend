@@ -56,7 +56,8 @@ const Login: React.FC = () => {
                     placeholder: 'johndoe@example.com',
                     required: true,
                     type: 'email',
-                    componentType: 'textField'
+                    componentType: 'textField',
+                    optionList: [],
                 },
                 {
                     id: 'password',
@@ -65,7 +66,8 @@ const Login: React.FC = () => {
                     placeholder: '',
                     required: true,
                     type: 'password',
-                    componentType: 'textField'
+                    componentType: 'textField',
+                    optionList: []
                 },
             ]
         }
@@ -74,7 +76,7 @@ const Login: React.FC = () => {
 
     return <div className="w-full h-full relative flex items-center justify-center bg-cover"
                 style={{backgroundImage: "url('/auth_background.jpg')"}}>
-        <Card className="w-4/12">
+        <Card className="md:w-4/12">
             <NewsyForm className="flex flex-col gap-4" initialValues={signInInitialValues}
                        validationSchema={signInValidationSchema}
                        handleSubmit={handleSubmit} fieldGroups={fieldGroups} tokenSource={tokenSource} error={error} loading={status === ApiResponseEnum.LOADING}/>

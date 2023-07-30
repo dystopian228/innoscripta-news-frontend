@@ -5,12 +5,14 @@ import React from "react";
 import {CancelTokenSource} from "axios";
 import {TextInputProps} from "flowbite-react/lib/esm/components/TextInput/TextInput";
 import ChipCheckbox from "./ChipCheckbox";
+import FormbiteMultiselect from "./FormbiteMultiselect";
 
 interface FieldProps extends TextInputProps {
     id: string;
     label: string;
     name: string;
-    componentType: 'checkbox' | 'textField';
+    componentType: 'checkbox' | 'textField' | 'multiselect';
+    optionList: { value: string, label: string }[];
 }
 
 export interface FieldGroup {
@@ -47,30 +49,39 @@ const NewsyForm: React.FC<FormProps> = (props) => {
           }) => (
             <>
                 <Form className={props.className}>
-                    {props.fieldGroups.map((group) => (<div>
+                    {props.fieldGroups.map((group, index) => (<div>
                         <h3 className="font-bold text-xl mb-6">{group.title}</h3>
                         <div className={group.className}>
                             {group.fields.map((field) => {
-                                return <div>
-                                    {field.componentType == 'textField' ?
-                                        <FormbiteTextField
-                                            key={field.name}
-                                            label={field.label}
-                                            name={field.name}
-                                            id={field.id}
-                                            placeholder={field.placeholder}
-                                            required={field.required}
-                                            type={field.type}
-                                            setFieldValue={setFieldValue}
-                                            color={field.name && touched[field.name] && errors[field.name] ? 'failure' : ''}
-                                            helperText={<>{field.name && touched[field.name] && errors[field.name] ? errors[field.name] : undefined}</>}
-                                        /> : <ChipCheckbox name={field.name} label={field.label}
-                                                           value={field.value as unknown as boolean}
-                                                           setFieldValue={setFieldValue}/>}
-                                </div>
+                                if (field.componentType == 'textField') {
+                                    return <FormbiteTextField
+                                        className={field.className}
+                                        key={field.name}
+                                        label={field.label}
+                                        name={field.name}
+                                        id={field.id}
+                                        placeholder={field.placeholder}
+                                        required={field.required}
+                                        type={field.type}
+                                        setFieldValue={setFieldValue}
+                                        color={field.name && touched[field.name] && errors[field.name] ? 'failure' : ''}
+                                        helperText={<>{field.name && touched[field.name] && errors[field.name] ? errors[field.name] : undefined}</>}
+                                    />
+                                } else if (field.componentType == 'checkbox') {
+                                    return <ChipCheckbox name={field.name} label={field.label}
+                                                         className={field.className ?? null}
+                                                         value={field.value as unknown as boolean}
+                                                         setFieldValue={setFieldValue}/>
+                                } else if (field.componentType == 'multiselect') {
+                                    return <FormbiteMultiselect setFieldValue={setFieldValue} key={field.name}
+                                                                className={field.className ?? null}
+                                                                label={field.label} name={field.name}
+                                                                optionList={field.optionList}
+                                    />
+                                }
                             })}
                         </div>
-                        <hr className="font-bold my-6"/>
+                        {(index < props.fieldGroups.length - 1) && <hr className="font-bold my-6"/>}
                     </div>))}
                     {props.error && <Alert
                         color="failure">

@@ -58,7 +58,7 @@ const AppNavBar: React.FC = () => {
     return (
         <Navbar
             fluid
-            className="sticky top-0 bg-primary mt-0"
+            className="sticky top-0 bg-primary mt-0 z-10"
         >
             <Navbar.Brand href="/">
                 <img
@@ -69,45 +69,47 @@ const AppNavBar: React.FC = () => {
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
         </span>
             </Navbar.Brand>
-            {!user ? <div className="flex gap-2 md:order-2">
-                    <Link to='/auth/login'><Button color="secondary" theme={customButtonTheme}>
-                        Login
-                    </Button>
-                    </Link>
-                    <Link to="/auth/signup"><Button color="secondary" theme={customButtonTheme}>
-                        Sign up
-                    </Button>
-                    </Link>
-                </div> :
-                <div className="flex md:order-2">
-                    <Dropdown
-                        inline
-                        label={<Avatar alt="User settings"
-                                       img={`https://ui-avatars.com/api/?name=${user.name}`} rounded/>}
-                    >
-                        <Dropdown.Header>
+            <div className="flex gap-2 md:order-2">
+                {!user ? <>
+                        <Link to='/auth/login'><Button color="secondary" theme={customButtonTheme}>
+                            Login
+                        </Button>
+                        </Link>
+                        <Link to="/auth/signup"><Button color="secondary" theme={customButtonTheme}>
+                            Sign up
+                        </Button>
+                        </Link>
+                    </> :
+                    <>
+                        <Dropdown
+                            inline
+                            label={<Avatar alt="User settings"
+                                           img={`https://ui-avatars.com/api/?name=${user.name}`} rounded/>}
+                        >
+                            <Dropdown.Header>
             <span className="block text-sm">
               {user.name}
             </span>
-                            <span className="block truncate text-sm font-medium">
+                                <span className="block truncate text-sm font-medium">
               {user.email}
             </span>
-                        </Dropdown.Header>
-                        <Link to='/user/preferences'>
-                            <Dropdown.Item>
-                                Preferences
+                            </Dropdown.Header>
+                            <Link to='/user/preferences'>
+                                <Dropdown.Item>
+                                    Preferences
+                                </Dropdown.Item>
+                            </Link>
+                            <Dropdown.Divider/>
+                            <Dropdown.Item onClick={() => {
+                                // @ts-ignore
+                                dispatch(signOutUser({tokenSource}));
+                            }}>
+                                Sign out
                             </Dropdown.Item>
-                        </Link>
-                        <Dropdown.Divider/>
-                        <Dropdown.Item onClick={() => {
-                            // @ts-ignore
-                            dispatch(signOutUser({tokenSource}));
-                        }}>
-                            Sign out
-                        </Dropdown.Item>
-                    </Dropdown>
-                    <Navbar.Toggle/>
-                </div>}
+                        </Dropdown>
+                    </>}
+                <Navbar.Toggle/>
+            </div>
             <Navbar.Collapse>
                 <Link to='/'>
                     <Navbar.Link
@@ -120,14 +122,22 @@ const AppNavBar: React.FC = () => {
                     </Navbar.Link>
                 </Link>
                 {categories.map(category =>
-                    <Link to={`/${category}`}>
+                    <Link to={`/${category}`} key={category}>
                         <Navbar.Link theme={customLinkTheme.link}
-                                     key={category}
                                      active={selectedCategory === category}>
                             {capitalizeWord(category)}
                         </Navbar.Link>
                     </Link>)
                 }
+                <Link to='/search'>
+                    <Navbar.Link
+                        theme={customLinkTheme.link}
+                    >
+                        <p>
+                            Search
+                        </p>
+                    </Navbar.Link>
+                </Link>
             </Navbar.Collapse>
         </Navbar>)
 };

@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}',
-    './node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'
+    './node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
+    './node_modules/@uc-react-ui/multiselect/**/*.{js,ts,jsx,tsx}'
   ],
   plugins: [require('flowbite/plugin')],
   theme: {
