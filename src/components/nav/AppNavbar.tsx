@@ -87,12 +87,12 @@ const AppNavBar: React.FC = () => {
                                            img={`https://ui-avatars.com/api/?name=${user.name}`} rounded/>}
                         >
                             <Dropdown.Header>
-            <span className="block text-sm">
-              {user.name}
-            </span>
-                                <span className="block truncate text-sm font-medium">
-              {user.email}
-            </span>
+                    <span className="block text-sm">
+                    {user.name}
+                    </span>
+                                        <span className="block truncate text-sm font-medium">
+                    {user.email}
+                    </span>
                             </Dropdown.Header>
                             <Link to='/user/preferences'>
                                 <Dropdown.Item>
@@ -121,7 +121,7 @@ const AppNavBar: React.FC = () => {
                         </p>
                     </Navbar.Link>
                 </Link>
-                {categories.map(category =>
+                {categories.slice(0,6).map(category =>
                     <Link to={`/${category}`} key={category}>
                         <Navbar.Link theme={customLinkTheme.link}
                                      active={selectedCategory === category}>
